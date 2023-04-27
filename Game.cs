@@ -4,43 +4,17 @@
     {
         public void Start(List<Player> players)
         {
-
-            for (var round = 0; round < 5; round++)
+            for (var round = 1; round < 11; round++)
             {
                 Console.WriteLine("Round : " + round);
-                WhoWillPlay(players);
-                //foreach (var player in players)
-                //{
-                //    Console.WriteLine($"{player.GetName()} has {player.Points} points.");
-                //}
+                int rnd = new Random().Next(players.Count);
+                int rnd2 = rnd + 1;
+                var player1 = players[rnd];
+                var player2 = players[rnd2 == players.Count ? 0 : rnd2];
+                PapirRockSissor(player1, player2);
             }
             CheckWinner(players);
-
         }
-
-        //public int Number1(int maxNumber)
-        //{
-        //    int random = new Random().Next(maxNumber);
-        //    return random;
-        //}
-        //public int Number2(int maxNumber)
-        //{
-        //    int random = new Random().Next(maxNumber);
-        //    if (random == Number1(maxNumber)) Number2(maxNumber);
-        //    return random;
-        //}
-
-        public void WhoWillPlay(List<Player> players)
-        {
-            var p1 = new Random().Next(100);
-            var p2 = new Random().Next(100);
-            var p3 = new Random().Next(100);
-            if (p1 > p2 && p2 > p3) PapirRockSissor(players[0], players[1]);
-            if (p3 > p2 && p2 > p1) PapirRockSissor(players[1], players[2]);
-            if (p1 > p2 && p3 > p2) PapirRockSissor(players[0], players[2]);
-            else WhoWillPlay(players);
-        }
-
         public void PapirRockSissor(Player player1, Player player2)
         {
             int nmb = new Random().Next(1, 3);
@@ -49,7 +23,6 @@
             if (nmb == 1 && nmb2 == 2 || nmb == 2 && nmb2 == 3 || nmb == 3 && nmb2 == 1) player1.Win(player2);
             if (nmb == 2 && nmb2 == 1 || nmb == 3 && nmb2 == 2 || nmb == 1 && nmb2 == 3) player2.Win(player1);
         }
-
         public void CheckWinner(List<Player> players)
         {
             players.OrderByDescending(p => p.Points).ToList();
